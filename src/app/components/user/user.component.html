@@ -1,0 +1,186 @@
+<app-header></app-header>
+<html>
+  <title>Usuarios</title>
+  <body>
+    <h1>Listado de usuarios</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Documento de identificación</th>
+                <th scope="col">Tipo documento</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Zona</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Empresa</th>
+                <th scope="col">Cargo</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+              	<td>{{user.id}}</td>
+        				<td>{{user.id_type}}</td>
+        				<td>{{user.name}}</td>
+        				<td>{{user.lastname}}</td>
+        				<td>{{user.address}}</td>
+                <td>{{user.zone_id}}</td>
+        				<td>{{user.phone}}</td>
+        				<td>{{user.company_id}}</td>
+        				<td>{{user.position_id}}</td>
+        				<td>{{user.rol_id}}</td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm" (click)='deleteUser(confirmationModal,user.id)'>Eliminar
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm" (click)='assignVehicle(drivingModal,user.id)'>Asignar vehículo
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button type="button" class="btn btn-primary" (click)="open(userModal)">Nuevo usuario</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL Nuevo usuario-->
+    <ng-template #userModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Nuevo Usuario</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="userFormGroup" (ngSubmit)="submit(returnModal)">
+          <div class="form-group">
+            <label for="user_id">Documento de identificación</label>
+            <input type="text" class="form-control" id="user_id" name="user_id" formControlName="user_id" placeholder="Número" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="user_id_type">Tipo documento</label>
+            <input type="text" class="form-control" id="user_id_type" name="user_id_type" formControlName="user_id_type" placeholder="Ej: CC" required>
+          </div>
+          <div class="form-group">
+            <label for="user_address">Nombre(s)</label>
+            <input type="text" class="form-control" id="user_name" name="user_name" formControlName="user_name" placeholder="Nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="user_address">Apellido(s)</label>
+            <input type="text" class="form-control" id="user_lastname" name="user_lastname" formControlName="user_lastname" placeholder="Apellido" required>
+          </div>
+          <div class="form-group">
+            <label for="user_address">Dirección</label>
+            <input type="text" class="form-control" id="user_address" name="user_address" formControlName="user_address" placeholder="Dirección" required>
+          </div>
+          <div class="form-group">
+            <label for="user_zone_id">Zona ID</label>
+            <input type="text" class="form-control" id="user_zone_id" name="user_zone_id" formControlName="user_zone_id" placeholder="Número" required>
+          </div>
+          <div class="form-group">
+            <label for="user_phone">Teléfono</label>
+            <input type="text" class="form-control" id="user_phone" name="user_phone" formControlName="user_phone" placeholder="Número"  required>
+          </div>
+          <!-- <div class="form-group">
+            <label for="user_company_id">Empresa vinculante</label>
+            <input type="text" class="form-control" id="user_company_id" name="user_company_id" formControlName="user_company_id" placeholder="Número" required>
+          </div> -->
+          <!-- <div class="form-group">
+            <label for="user_position_id">Cargo</label>
+            <input type="text" class="form-control" id="user_position_id" name="user_position_id" formControlName="user_position_id" placeholder="Número" required>
+          </div> -->
+          <!-- <div class="form-group">
+            <label for="user_rol_id">Rol</label>
+            <input type="text" class="form-control" id="user_rol_id" name="user_rol_id" formControlName="user_rol_id" placeholder="Número" required>
+          </div> -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-dark" [disabled]="!userFormGroup.valid">Aceptar</button>
+            <!-- <button type="button" class="btn btn-outline-dark" (click)="submit(returnModal)">Aceptar</button> -->
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+
+    <!-- MODAL Aignar vehículo a usuario-->
+    <ng-template #drivingModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Asignar vehículo</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <label>Vehiculos asignados actualmente:</label>
+      <ul>
+        <li *ngFor="let assignedVehicle of assignedVehicles">{{assignedVehicle.plate}} - {{assignedVehicle.brand}} {{assignedVehicle.lineup}}</li>
+      </ul>
+
+      <div class="modal-body">
+        <form [formGroup]="drivingFormGroup">
+          <div class="form-group">
+            <label for="driving_vehicle_id">Vehículo </label>
+            <select id="driving_vehicle_id" formControlName="driving_vehicle_id" class="form-control">
+              <option *ngFor="let vehicle of vehicles" value="{{vehicle.id}}">{{vehicle.plate}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="submit_asssign_vehicle(returnModal)">Aceptar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+      </div>
+    </ng-template>
+
+    <!-- MODAL Retorno -->
+    <ng-template #returnModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Respuesta</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        {{response}}
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Aceptar</button>
+      </div>
+    </ng-template>
+
+    <!-- MODAL Confirmacion -->
+    <ng-template #confirmationModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Confirmación</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        ¿Está seguro?
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="submit_delete_user(returnModal)">Aceptar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+      </div>
+    </ng-template>
+
+  </body>
+</html>
+

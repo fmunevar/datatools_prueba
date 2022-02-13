@@ -1,0 +1,108 @@
+<app-header></app-header>
+<html>
+  <title>Empresas</title>
+  <body>
+    <h1>Listado de empresas</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Número</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Ubicación</th>
+                <th scope="col">Teléfono</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let company of companies">
+                <td>{{company.id}}</td>
+                <td>{{company.id_type}}</td>
+                <td>{{company.id_number}}</td>
+                <td>{{company.name}}</td>
+                <td>{{company.address}}</td>
+                <td>{{company.zone_id}}</td>
+                <td>{{company.phone}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button type="button" class="btn btn-primary" (click)="open(companyModal)">Nueva empresa</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <ng-template #companyModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Nueva empresa</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="companyFormGroup" (ngSubmit)="submit(returnModal)">
+          <div class="form-group">
+            <label for="company_id_type">Tipo identificación</label>
+            <input type="text" class="form-control" id="company_id_type" formControlName="company_id_type" placeholder="Ej: NIT" required>
+          </div>
+          <div class="form-group">
+            <label for="company_id_number">Número identificación</label>
+            <input type="text" class="form-control" id="company_id_number" formControlName="company_id_number" placeholder="Ej: 800123456-4" required>
+          </div>
+          <div class="form-group">
+            <label for="company_name">Nombre</label>
+            <input type="text" class="form-control" id="company_name" formControlName="company_name" placeholder="Nombre empresa" required>
+          </div>
+          <div class="form-group">
+            <label for="company_address">Dirección</label>
+            <input type="text" class="form-control" id="company_address" formControlName="company_address" placeholder="Dirección empresa" required>
+          </div>
+          <div class="form-group">
+            <label for="company_zone_id">Zona ID</label>
+            <input type="text" class="form-control" id="company_zone_id" formControlName="company_zone_id" placeholder="Un valor numérico" required>
+          </div>
+          <div class="form-group">
+            <label for="company_phone">Teléfono</label>
+            <input type="text" class="form-control" id="company_phone" formControlName="company_phone" placeholder="Teléfono empresa" required>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-dark" [disabled]="!companyFormGroup.valid">Aceptar</button>
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+    </ng-template>
+
+      
+      <!-- MODAL Retorno -->
+    <ng-template #returnModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Respuesta</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        {{response}}
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Aceptar</button>
+      </div>
+    </ng-template>
+
+  </body>
+</html>
+

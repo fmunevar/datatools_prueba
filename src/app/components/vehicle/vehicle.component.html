@@ -1,0 +1,168 @@
+<app-header></app-header>
+
+<html>
+  <title>Vehiculos</title>
+  <body>
+    <h1>Listado de vehiculos</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Placa</th>
+                <th scope="col">Motor</th>
+                <th scope="col">Chasis</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Fecha de registro</th>
+                <th scope="col">Pasajeros sentados</th>
+                <th scope="col">Pasajeros de pie</th>
+                <th scope="col">Peso bruto</th>
+                <th scope="col">Peso seco</th>
+                <th scope="col">Puertas</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Linea</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vehicle of vehicles">
+                <td>{{vehicle.plate}}</td>
+        				<td>{{vehicle.engine}}</td>
+        				<td>{{vehicle.chassis}}</td>
+        				<td>{{vehicle.model}}</td>
+        				<td>{{vehicle.registration_date}}</td>
+        				<td>{{vehicle.seated_passengers}}</td>
+        				<td>{{vehicle.standing_passengers}}</td>
+        				<td>{{vehicle.gross_weight}}</td>
+        				<td>{{vehicle.net_weight}}</td>
+        				<td>{{vehicle.doors}}</td>
+        				<td>{{vehicle.brand}}</td>
+                <td>{{vehicle.lineup}}</td>
+        				<td>
+                  <button *ngIf="vehicle.enrollment_status=='disenrolled' || vehicle.enrollment_status==null" type="button" class="btn btn-primary btn-sm" (click)='enrollVehicle(enrollModal, vehicle.plate)'>Afiliar</button>
+                  <button *ngIf="vehicle.enrollment_status=='enrolled'" type="button" class="btn btn-danger btn-sm" (click)='disenrollVehicle(enrollModal, vehicle.plate)'>Desafiliar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button type="button" class="btn btn-primary" (click)="open(vehicleModal)">Nuevo vehiculo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <ng-template #vehicleModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Nuevo vehiculo</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="vehicleFormGroup" (ngSubmit)="submit(returnModal)">
+          <div class="form-group">
+            <label for="vehicle_plate">Placa</label>
+            <input type="text" class="form-control" id="vehicle_plate" formControlName="vehicle_plate" placeholder="Ej: AAA-123" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_engine">Motor</label>
+            <input type="text" class="form-control" id="vehicle_engine" formControlName="vehicle_engine" placeholder="Ej: Valor de cc" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_chassis">Chasis</label>
+            <input type="text" class="form-control" id="vehicle_chassis" formControlName="vehicle_chassis" placeholder="Chasis" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_model">Modelo</label>
+            <input type="text" class="form-control" id="vehicle_model" formControlName="vehicle_model" placeholder="Año" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_registration_date">Fecha de registro</label>
+            <input type="date" class="form-control" id="vehicle_registration_date" formControlName="vehicle_registration_date" placeholder="mm/dd/aaaa" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_seated_passengers">Pasajeros sentados</label>
+            <input type="text" class="form-control" id="vehicle_seated_passengers" formControlName="vehicle_seated_passengers" placeholder="Número" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_standing_passengers">Pasajeros de pie</label>
+            <input type="text" class="form-control" id="vehicle_standing_passengers" formControlName="vehicle_standing_passengers" placeholder="Número" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_gross_weight">Peso bruto</label>
+            <input type="text" class="form-control" id="vehicle_gross_weight" formControlName="vehicle_gross_weight" placeholder="Número" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_net_weight">Peso neto</label>
+            <input type="text" class="form-control" id="vehicle_net_weight" formControlName="vehicle_net_weight" placeholder="Número" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_doors">Puertas</label>
+            <input type="text" class="form-control" id="vehicle_doors" formControlName="vehicle_doors" placeholder="Cantidad" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_brand">Marca</label>
+            <input type="text" class="form-control" id="vehicle_brand" formControlName="vehicle_brand" placeholder="Ej: Chevrolet" required>
+          </div>
+          <div class="form-group">
+            <label for="vehicle_lineup">Línea</label>
+            <input type="text" class="form-control" id="vehicle_lineup" formControlName="vehicle_lineup" placeholder="Ej: Sail" required>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-outline-dark" (click)="submit()">Aceptar</button> -->
+            <button type="submit" class="btn btn-outline-dark" [disabled]="!vehicleFormGroup.valid">Aceptar</button>
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+    </ng-template>
+
+    <!-- MODAL Afiliar vehiculo -->
+    <ng-template #enrollModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Estado vehículo</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        {{enrollment_status}}
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="loadVehicles()">Aceptar</button>
+      </div>
+    </ng-template>
+
+
+    <!-- MODAL Retorno -->
+    <ng-template #returnModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Respuesta</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        {{response}}
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Aceptar</button>
+      </div>
+    </ng-template>
+      
+
+  </body>
+</html>
+
