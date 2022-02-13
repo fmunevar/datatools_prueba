@@ -15,6 +15,7 @@ Los cargos disponibles son:
 
 # Data de prueba
 Para iniciar sesión, puede hacerse con:
+
 Usuario administrador que puede agregar compañías:
 j.valencia/j.valencia
 
@@ -26,10 +27,25 @@ Estos tres usuarios están asignados a compañías diferentes, por lo que pueden
 
 # Información adicional
 + El login cuenta con una seguridad SHA-256 para el cifrado desde el front y en la base de datos, haciendo posterior comparación de _string_ para permitir el acceso.
+
+![image](https://user-images.githubusercontent.com/41402595/153772485-89326436-ff1b-4bf4-8abc-7255d8608267.png)
+
 + El ACL permite el acceso únicamente a las páginas permitidas.
+
+![image](https://user-images.githubusercontent.com/41402595/153772540-c310c9e4-2c14-4e15-af6d-ab9516f0e09d.png)
+![image](https://user-images.githubusercontent.com/41402595/153772674-a13cb036-fa9c-400b-8001-d6eefc6f5527.png)
+
 + Para los formularios no se habilita el botón de _submit_ hasta que no se ingrese la información completa.
+
+![image](https://user-images.githubusercontent.com/41402595/153772765-3ab3ad27-dee2-4ab5-b6e9-0f7804d317eb.png)
+
 + Los vehículos que estén afiliados a una compañía solo podrán ser vistos por esta. Y los vehículos que no estén afiliados a ninguna pueden ser vistos por todas las compañías.
+
+![image](https://user-images.githubusercontent.com/41402595/153772601-2a7f3a6c-16e2-400f-8a32-14aee1ff7fe9.png)
+
 + Los Conductores pueden tener varios vehículos asginados.
+
+![image](https://user-images.githubusercontent.com/41402595/153772631-f506ce3c-7f1e-4528-a26f-7d0c9b1fe62c.png)
 
 
 *********************************************************************
