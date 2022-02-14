@@ -47,6 +47,10 @@ Estos tres usuarios están asignados a compañías diferentes, por lo que pueden
 
 ![image](https://user-images.githubusercontent.com/41402595/153772631-f506ce3c-7f1e-4528-a26f-7d0c9b1fe62c.png)
 
++ La información de la localización se muestra construyendo la jerarquía de la tabla recursiva
+
+![image](https://user-images.githubusercontent.com/41402595/153803055-70ff1b14-9bd2-421d-b95c-c931a700d975.png)
+
 
 *********************************************************************
 
